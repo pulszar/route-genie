@@ -26,7 +26,7 @@ async function getRoute() { // OpenAI API
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer OPENAI_API_KEY`
+                'Authorization': `Bearer APIKEY`
             },
             body: JSON.stringify({
                 model: "gpt-4o-mini",
@@ -42,7 +42,7 @@ async function getRoute() { // OpenAI API
                     to generate an appropriate amount of waypoints to match the user's needs.
                    
                     The program currently only supports driving as its mode of transportation, so don't create a route that requires
-                    other forms of transportation. The exception to this is ferries.
+                    other forms of transportation such as going from the mainland to an island (ex. India -> Maldives). The exception to this is ferries.
                    
                     You will only produce the specific locations and respective country/subdivision.
                    
@@ -62,7 +62,9 @@ async function getRoute() { // OpenAI API
                         "stopover": true
                         }
 
-                    }`},
+                    }
+                        
+                    `},
                     { role: "user", content: description }
                   ],
                 max_tokens: 250
