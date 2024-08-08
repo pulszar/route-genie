@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Road Trip Route Generator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Road Trip Route Generator</h1>
+
+    <div id="input-container">
+        <textarea id="description" placeholder="Describe your ideal road trip"></textarea>
+        <button onclick="getRoute()">Create Route</button>
+    </div>
+
+    
+    <div id="map"></div>
+    
+    <div id="response-container">
+        <h2>AI Response:</h2>
+        <pre id="response"></pre>
+    </div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_MAPS_API_KEY&callback=initMap"></script>
+    <script src="script.js"></script>
+</body>
+</html>
