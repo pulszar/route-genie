@@ -45,12 +45,13 @@ async function getRoute() { // OpenAI API
                     other forms of transportation such as going from the mainland to an island (ex. India -> Maldives). The exception to this is ferries.
                    
                     You will only produce the specific locations and respective country/subdivision.
+
+                    Provide a description as to why it fits the user's description in another key value named "outputDescription"
                    
                     Your output will be in a parsable JSON format. It will be in the following format:
                    
                     {
                     "origin": "New York, NY",
-                    "destination": "Los Angeles, CA",
                     "waypoints":
                     [
                         {
@@ -62,8 +63,14 @@ async function getRoute() { // OpenAI API
                         "stopover": true
                         }
 
+                    ],
+                    "destination": "Los Angeles, CA",
+                    "outputDescription": "blah blah"
                     }
-                        
+                    
+                    I've been getting errors because you output a json starting and ending with backquotes and you also say 'json' before the json file.
+                    make sure the output is formatted like the example.
+
                     `},
                     { role: "user", content: description }
                   ],
@@ -129,12 +136,15 @@ function calculateAndDisplayRoute() {
         destination: end,
         waypoints: waypoints,
         optimizeWaypoints: true,
+        avoidFerries: true,
         travelMode: google.maps.TravelMode.DRIVING // app limited only to driving
     }, (response, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
             directionsRenderer.setDirections(response);
         } else {
-            window.alert('Directions request failed due to ' + status);
+            // window.alert('Directions request failed due to ' + status);
+            window.alert('Location not found or is inaccessible, trying again... Error: ' + status);
+            getRoute();
         }
     });
 }
