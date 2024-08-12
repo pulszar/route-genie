@@ -46,7 +46,9 @@ async function getRoute() { // OpenAI API
                    
                     You will only produce the specific locations and respective country/subdivision.
 
-                    Provide a description as to why it fits the user's description in another key value named "outputDescription"
+                    Provide a description as to why it fits the user's description in another key value named "outputDescription". This description
+                    shouldn't specify a route because what you pass to the google maps API might optimize it to find the faster route. You can
+                    include the origin and destination as these are garunteed to be in the correct order.
                    
                     Your output will be in a parsable JSON format. It will be in the following format:
                    
