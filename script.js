@@ -26,9 +26,8 @@ async function getRoute() { // OpenAI API
 
         // response return a Reponse object, extract with await response.json()
         result = await response.json();
-
         const data = JSON.parse(result.choices[0].message.content);
-
+        console.log(data.outputDescription)
         populateMap(data)
 
 

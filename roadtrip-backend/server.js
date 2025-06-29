@@ -30,12 +30,9 @@ app.post('/generate-roadtrip', async (req, res) => {
     const userPrompt = req.body.prompt;
     
     try {
-        const completion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [
-                { 
-                    role: "system", 
-                    content: `Your input will consist of a user describing what their ideal road trip looks like. Your job is to produce a list of
+        const response = await openai.responses.create({
+            model: "gpt-4o",
+            messages: `Your input will consist of a user describing what their ideal road trip looks like. Your job is to produce a list of
                     consisting of locations. The locations will consist of an origin, waypoints, and a destination. As a result, the
                     a road trip would start at the origin, continue from top to bottom of the waypoints, then end at the destination.
                     Be as efficient as possible creating this list.
@@ -73,16 +70,12 @@ app.post('/generate-roadtrip', async (req, res) => {
                     }
                     
                     I've been getting errors because you output a json starting and ending with backquotes and you also say 'json' before the json file.
-                    make sure the output is formatted like the example.` 
-                },
-                {      
-                    role: "user", 
-                    content: userPrompt 
-                }
-            ]
+                    make sure the output is formatted like the example.`,
+            input: userPrompt
         });
 
-        res.json(completion)
+        console.log(response)
+        // res.json(completion)
 
     } catch (err) {
         console.error("Error in /generate-roadtrip: ", err.message);
@@ -91,8 +84,6 @@ app.post('/generate-roadtrip', async (req, res) => {
 
 
 });
-
-
 
 //             method: 'POST',
 //         headers: {
