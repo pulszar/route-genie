@@ -2,10 +2,11 @@ let map, directionsService, directionsRenderer;
 let routeData; 
 
 function initMap() { 
-    map = new google.maps.Map(document.getElementById('map'), {
+    mapOptions = { 
         center: { lat: 0, lng: 0 }, 
         zoom: 2
-    });
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer();
@@ -26,7 +27,8 @@ async function getRoute() { // OpenAI API
 
         // response return a Reponse object, extract with await response.json()
         result = await response.json();
-        const data = JSON.parse(result.choices[0].message.content);
+        // even though result is a json, output_text is only a string that looks like a json. so make it into a real json.
+        const data = JSON.parse(result.output_text); 
         console.log(data.outputDescription)
         populateMap(data)
 
@@ -51,20 +53,22 @@ function populateMap(data) {
         stopover: waypoint.stopover
     }));
 
-    directionsService.route({
+    request = {
         origin: start,
         destination: end,
         waypoints: waypoints,
         optimizeWaypoints: true,
         avoidFerries: true,
         travelMode: google.maps.TravelMode.DRIVING // app limited only to driving
-    }, (response, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
+    };
+
+    directionsService.route(request, (response, status) => {
+        if (status === 'OK') {
             directionsRenderer.setDirections(response);
         } else {
             // window.alert('Directions request failed due to ' + status);
-            window.alert('Location not found or is inaccessible, trying again... Error: ' + status);
-            getRoute();
+            window.alert('Location not found or is inaccessible, please try again. Error: ' + status);
+            return;
         }
     });
 }
