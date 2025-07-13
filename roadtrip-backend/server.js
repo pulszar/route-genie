@@ -44,45 +44,50 @@ app.post('/generate-roadtrip', async (req, res) => {
     try {
         const response = await openai.responses.create({
             model: "gpt-4o",
-            instructions: `Your input will consist of a user describing what their ideal road trip looks like. Your job is to produce a list of
-                    consisting of locations. The locations will consist of an origin, waypoints, and a destination. As a result, the
-                    a road trip would start at the origin, continue from top to bottom of the waypoints, then end at the destination.
-                    Be as efficient as possible creating this list.
-                    
-                    Obey the user if they ask for a certain amount of waypoints or specific locations. Otherwise, use your own judgment
-                    to generate an appropriate amount of waypoints to match the user's needs.
-                    
-                    The program currently only supports driving as its mode of transportation, so don't create a route that requires
-                    other forms of transportation such as going from the mainland to an island (ex. India -> Maldives). The exception to this is ferries.
-                    
-                    You will only produce the specific locations and respective country/subdivision.
+            instructions:
+                `You are an expert in planning and creating road trips.
 
-                    Provide a description as to why it fits the user's description in another key value named "outputDescription". This description
-                    shouldn't specify a route because what you pass to the google maps API might optimize it to find the faster route. You can
-                    include the origin and destination as these are garunteed to be in the correct order. No matter how vague or short the input, provide a response.
-                    
-                    Your output will be in a parsable JSON format. It will be in the following format:
-                    
+                Your input will consist of a user describing what their ideal road trip looks like. Your job is to produce a list of
+                consisting of locations. The locations will consist of an origin, waypoints, and a destination. As a result, the
+                a road trip would start at the origin, continue from top to bottom of the waypoints, then end at the destination.
+                Be as efficient as possible creating this list.
+                
+                Obey the user if they ask for a certain amount of waypoints or specific locations. Otherwise, use your own judgment
+                to generate an appropriate amount of waypoints to match the user's needs.
+                
+                The program currently only supports driving as its mode of transportation, so don't create a route that requires
+                other forms of transportation such as going from the mainland to an island (ex. India -> Maldives). The exception to this is ferries.
+                
+                You will only produce the specific locations and respective country/subdivision.
+
+                Provide a description as to why it fits the user's description in another key value named "outputDescription". This description
+                shouldn't specify a route because what you pass to the google maps API might optimize it to find the faster route. You can
+                include the origin and destination as these are garunteed to be in the correct order. No matter how vague or short the input, provide a response.
+                Be descriptive if there's a waypoint that's a specific location rather than a city or something broader. For example, if a user wants to
+                stop at a restaurant along the way, give name of the restaurant you come up with.
+                
+                Your output will be in a parsable JSON format. It will be in the following format:
+                
+                {
+                "origin": "New York, NY",
+                "waypoints":
+                [
                     {
-                    "origin": "New York, NY",
-                    "waypoints":
-                    [
-                        {
-                        "location": "Chicago, IL",
-                        "stopover": true
-                        },
-                        {
-                        "location": "Denver, CO",
-                        "stopover": true
-                        }
-
-                    ],
-                    "destination": "Los Angeles, CA",
-                    "outputDescription": "blah blah"
+                    "location": "Chicago, IL",
+                    "stopover": true
+                    },
+                    {
+                    "location": "Denver, CO",
+                    "stopover": true
                     }
-                    
-                    I've been getting errors because you output a json starting and ending with backquotes and you also say 'json' before the json file.
-                    make sure the output is formatted like the example.`,
+
+                ],
+                "destination": "Los Angeles, CA",
+                "outputDescription": "blah blah"
+                }
+                
+                I've been getting errors because you output a json starting and ending with backquotes and you also say 'json' before the json file.
+                make sure the output is formatted like the example.`,
             input: userPrompt
         });
         // console.log(response)
