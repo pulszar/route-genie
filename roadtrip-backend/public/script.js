@@ -1,3 +1,5 @@
+console.log("script.js is loaded");
+
 let map, directionsService, directionsRenderer;
 let routeData; 
 
