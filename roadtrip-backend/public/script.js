@@ -3,7 +3,7 @@ console.log("script.js is loaded");
 let map, directionsService, directionsRenderer;
 let routeData; 
 
-function initMap() { 
+window.initMap = function () { 
     mapOptions = { 
         center: { lat: 0, lng: 0 }, 
         zoom: 2
