@@ -3,17 +3,18 @@ console.log("script.js is loaded");
 let map, directionsService, directionsRenderer;
 let routeData; 
 
-window.initMap = function () {
-    const mapOptions = {
-      center: { lat: 0, lng: 0 },
-      zoom: 2
-    };
-  
+function initMap() { 
+    mapOptions = { 
+        center: { lat: 0, lng: 0 }, 
+        zoom: 2
+    }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
-};
+}
+
 
 async function getRoute() { // OpenAI API
     try {
