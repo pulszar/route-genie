@@ -35,6 +35,12 @@ const openai = new OpenAI({
 
 app.post('/generate-roadtrip', async (req, res) => {
     const userPrompt = req.body.prompt;
+    
+    if (userPrompt.length > 500) {
+        console.alert("Request too long, please enter a shorter route description")
+        return
+    }
+    
     try {
         const response = await openai.responses.create({
             model: "gpt-4o",
