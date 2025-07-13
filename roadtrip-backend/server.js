@@ -5,7 +5,7 @@ import cors from 'cors'; // allows requests from frontend
 import bodyParser from 'body-parser'; // converts JSON to JS objects
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
-import rateLimit from 'express-rate-limit'
+// import rateLimit from 'express-rate-limit'
 
 dotenv.config();
 
@@ -23,18 +23,18 @@ app.use(express.static('public'));
 
 // openai stuff
 
-const limiter = rateLimit({
-    windowMs: 24 * 60 * 60 * 1000, // 24 hrs
-	limit: 5 // limit each ip to this many requests within the window described above
-})
-app.use(limiter)
+// const limiter = rateLimit({
+//     windowMs: 24 * 60 * 60 * 1000, // 24 hrs
+// 	limit: 5 // limit each ip to this many requests within the window described above
+// })
+// app.use(limiter)
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
 
-app.post('/generate-roadtrip', limiter, async (req, res) => {
+app.post('/generate-roadtrip', async (req, res) => {
     const userPrompt = req.body.prompt;
     
     if (userPrompt.length > 500) {
