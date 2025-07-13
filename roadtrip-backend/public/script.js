@@ -19,7 +19,7 @@ async function getRoute() { // OpenAI API
 
         const description = document.getElementById('description').value;
 
-        response = await fetch('http://localhost:4000/generate-roadtrip', {
+        response = await fetch('https://routegenie.onrender.com/generate-roadtrip', {
             method: "POST", // send data
             headers: { 'Content-Type': 'application/json' }, // need a header when sending json
             body: JSON.stringify({ prompt: description })

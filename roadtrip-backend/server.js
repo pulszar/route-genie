@@ -19,6 +19,7 @@ const port = process.env.PORT || 4000;
 
 app.use(cors()); // allows frontend thats probably on a different port talk to backend
 app.use(bodyParser.json()); // parses raw body into json
+app.use(express.static('public'));
 
 // openai stuff
 
