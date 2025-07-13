@@ -34,7 +34,7 @@ const openai = new OpenAI({
 });
 
 
-app.post('/generate-roadtrip', async (req, res) => {
+app.post('/generate-roadtrip', limiter, async (req, res) => {
     const userPrompt = req.body.prompt;
     
     if (userPrompt.length > 500) {
