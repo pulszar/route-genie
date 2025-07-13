@@ -13,7 +13,7 @@ dotenv.config();
 // initalize the app
 
 const app = express(); // server
-const port = 4000; // server listens on 4000
+const port = process.env.PORT || 4000; 
 
 // middleware, stuff that sits in between request from client and route handler
 
