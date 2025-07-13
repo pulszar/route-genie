@@ -30,6 +30,10 @@ async function getRoute() { // OpenAI API
         // even though result is a json, output_text is only a string that looks like a json. so make it into a real json.
         const data = JSON.parse(result.output_text); 
         console.log(data.outputDescription)
+
+        const routeDesc = document.getElementById('routeDescription')
+        routeDesc.textContent = data.outputDescription
+
         populateMap(data)
 
 
