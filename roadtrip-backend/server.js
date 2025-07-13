@@ -37,8 +37,7 @@ app.post('/generate-roadtrip', async (req, res) => {
     const userPrompt = req.body.prompt;
     
     if (userPrompt.length > 500) {
-        console.alert("Request too long, please enter a shorter route description")
-        return
+        return res.status(400).json({ error: "Request too long, please enter a shorter route description" });
     }
     
     try {
@@ -110,3 +109,7 @@ app.post('/generate-roadtrip', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
+
+app.get('/', (req, res) => {
+    res.send('Backend is running. Try POST /generate-roadtrip');
+  });
