@@ -9,7 +9,6 @@ import rateLimit from 'express-rate-limit'
 
 dotenv.config();
 
-
 // initalize the app
 
 const app = express(); // server
