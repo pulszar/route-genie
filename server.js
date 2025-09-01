@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 const limiter = rateLimit({
     windowMs: 24 * 60 * 60 * 1000, // 24 hrs
-	limit: 20 // limit each ip to this many requests within the window described above
+	limit: 100 // limit each ip to this many requests within the window described above
 })
 app.use(limiter)
 
