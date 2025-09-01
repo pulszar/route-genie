@@ -5,7 +5,7 @@ import cors from 'cors'; // allows requests from frontend
 import bodyParser from 'body-parser'; // converts JSON to JS objects
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
-// import rateLimit from 'express-rate-limit'
+import rateLimit from 'express-rate-limit'
 
 dotenv.config();
 
@@ -20,15 +20,13 @@ app.use(cors()); // allows frontend thats probably on a different port talk to b
 app.use(bodyParser.json()); // parses raw body into json
 app.use(express.static('public'));
 
-app.set('trust proxy', 1);
-
 // openai stuff
 
-// const limiter = rateLimit({
-//     windowMs: 24 * 60 * 60 * 1000, // 24 hrs
-// 	limit: 100 // limit each ip to this many requests within the window described above
-// })
-// app.use(limiter)
+const limiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hrs
+	limit: 20 // limit each ip to this many requests within the window described above
+})
+app.use(limiter)
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
