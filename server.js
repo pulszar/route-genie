@@ -20,6 +20,8 @@ app.use(cors()); // allows frontend thats probably on a different port talk to b
 app.use(bodyParser.json()); // parses raw body into json
 app.use(express.static('public'));
 
+app.set('trust proxy', 1);
+
 // openai stuff
 
 const limiter = rateLimit({
